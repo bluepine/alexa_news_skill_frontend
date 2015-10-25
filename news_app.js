@@ -43,7 +43,7 @@ var httpGet = function(url) {
 var _ = require('lodash');
 var alexa = require('alexa-app')
 var app = new alexa.app()
-var TOPIC = 'TOPIC'
+var TOPIC = 'Topic'
 app.intent('ArticleListOnTopicIntent', {
         "slots": {
             'Topic': 'AMAZON.LITERAL'
@@ -51,19 +51,21 @@ app.intent('ArticleListOnTopicIntent', {
         "utterances": [],
     },
     function(request, response) {
-        var topic = request.slot(TOPIC).trim();
+        var topic = request.slot(TOPIC);
         if(!topic){
-            response.say('Please provide a topic')
+            response.reprompt('Please ask for headlines on a specific topc')
             return true
         }
+        topic = topic.trim()
         var url = backend_base_url + 'articlelistontopic/'+topic
         httpGet(url).then(function(body) {
             var headlines = _.reduce(body, function(ret, item) {
                 ret += item.body + ' '
                 return ret
             }, '')
+
             headlines = headlines.trim()
-            if (!headlines.trim()) {
+            if (!headlines) {
                 response.say(JSON.stringify(headlines)).send()
             }else{
                 response.say('sorry, we have no more articles on '+topic).send()

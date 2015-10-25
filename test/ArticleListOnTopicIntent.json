@@ -1,6 +1,6 @@
 {
   "session": {
-    "sessionId": "SessionId.0681c844-1b8f-4840-bb1b-949f29bc07a8",
+    "sessionId": "SessionId.d41afef8-65ba-43b2-8dcc-b3f40c6f13e0",
     "application": {
       "applicationId": "amzn1.echo-sdk-ams.app.db490dd5-2058-4edc-a8c4-5cc7398149a9"
     },
@@ -13,11 +13,16 @@
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "EdwRequestId.4dbd7682-fa91-4d33-b4fb-7a1daca7d3f9",
-    "timestamp": 1445791304533,
+    "requestId": "EdwRequestId.1d6c0931-2b59-44a4-a3b1-b2ce32829e35",
+    "timestamp": 1445803166141,
     "intent": {
-      "name": "getNews",
-      "slots": {}
+      "name": "ArticleListOnTopicIntent",
+      "slots": {
+        "Topic": {
+          "name": "Topic",
+          "value": "politics"
+        }
+      }
     },
     "reason": null
   }
