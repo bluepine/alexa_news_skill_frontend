@@ -43,7 +43,7 @@ app.intent('reset', {
     function(request, response) {
         log('reset')
         var url = "https://controller-noyda.c9.io"
-        Q(url, function(error, resp, body) {
+        R(url, function(error, resp, body) {
             if (!error && resp.statusCode == 200) {
                 response.say('done').send()
             }
