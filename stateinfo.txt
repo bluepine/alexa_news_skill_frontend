@@ -1,0 +1,17 @@
+per session:
+
+    list of headline lists:
+
+        headline list1 -> headline list2 -> headline list3 -> headline list4 -> headline list5 -> headline list6
+        
+        For simplicity, we can assume the head of this list is the current list. (Meaning we discard lists as we go back)
+
+    list of article ids for articles whose details have been played
+        
+        id1 -> id2 -> id3 -> id4 -> id5
+        
+
+
+persistent:
+
+    collection of black listed article ids
