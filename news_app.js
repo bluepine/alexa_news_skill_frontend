@@ -96,7 +96,7 @@ app.intent('ArticleDetailNumberIntent', {
         httpGet(url).then(function(body) {
             if (!body || !body.title || !body.body) {
                 response.say('Please ask for a list of headlines first').send()
-                return false
+                return
             }
             var detail = body.title + '.' + body.body
             response.say(detail).send()
