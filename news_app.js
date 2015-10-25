@@ -19,6 +19,8 @@
 // ReplayArticleIntent replay article
 // ReplayArticleListIntent replay headlines
 
+var backend_base_url = 'https://controller-noyda.c9.io/'
+
 function log(text) {
     console.log(text)
 }
@@ -38,24 +40,40 @@ var httpGet = function(url) {
     })
     return deferred.promise;
 }
-
+var _ = require('lodash');
 var alexa = require('alexa-app')
 var app = new alexa.app()
-// app.intent('getNews', {
-//         "slots": {},
-//         "utterances": [],
-//     },
-//     function(request, response) {
-//         var url = "https://controller-noyda.c9.io/articlelistontopic/news"
-//         httpGet(url).then(function(body) {
-//             response.say(JSON.stringify(body)).send()
-//             response.send()
-//         }).catch(function(err) {
-//             response.say('http request failed').send()
-//         });
-//         return false;
-//     }
-// )
+var TOPIC = 'TOPIC'
+app.intent('ArticleListOnTopicIntent', {
+        "slots": {
+            'Topic': 'AMAZON.LITERAL'
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var topic = request.slot(TOPIC).trim();
+        if(!topic){
+            response.say('Please provide a topic')
+            return true
+        }
+        var url = backend_base_url + 'articlelistontopic/'+topic
+        httpGet(url).then(function(body) {
+            var headlines = _.reduce(body, function(ret, item) {
+                ret += item.body + ' '
+                return ret
+            }, '')
+            headlines = headlines.trim()
+            if (!headlines.trim()) {
+                response.say(JSON.stringify(headlines)).send()
+            }else{
+                response.say('sorry, we have no more articles on '+topic).send()
+            }
+        }).catch(function(err) {
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
 
 
 module.exports = app
