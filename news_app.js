@@ -44,9 +44,10 @@ var _ = require('lodash');
 var alexa = require('alexa-app')
 var app = new alexa.app()
 var TOPIC = 'Topic'
+var NUMBER = 'StoryNumber'
 app.intent('ArticleListOnTopicIntent', {
         "slots": {
-            'Topic': 'AMAZON.LITERAL'
+            TOPIC: 'AMAZON.LITERAL'
         },
         "utterances": [],
     },
@@ -78,18 +79,47 @@ app.intent('ArticleListOnTopicIntent', {
     }
 )
 
+app.intent('ArticleDetailNumberIntent', {
+        "slots": {
+            'StoryNumber': 'AMAZON.NUMBER'
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var number = request.slot(NUMBER);
+        if (!number) {
+            response.reprompt('Please let me know which headline do you want to hear more about')
+            return true
+        }
+        number = number.trim()
+        var url = backend_base_url + 'articledetail/number/' + number
+        httpGet(url).then(function(body) {
+            if (!body || !body.title || !body.body) {
+                response.say('Please ask for a list of headlines first').send()
+                return false
+            }
+            var detail = body.title + '.' + body.body
+            response.say(detail).send()
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
 
 function add_debugging_card(request, response) {
     var intent = request.data.request.intent.name
     var slots = request.data.request.intent.slots
     var card_response = ''
     for (var key in slots) {
-        card_response = card_response  + key + " : " + request.slot(key) + '; '
+        card_response = card_response + key + " : " + request.slot(key) + '; '
     }
     response.card(intent, card_response)
 }
 
-app.pre = function(request,response,type) {
+app.pre = function(request, response, type) {
     add_debugging_card(request, response)
 };
 

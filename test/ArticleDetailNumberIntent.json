@@ -1,6 +1,6 @@
 {
   "session": {
-    "sessionId": "SessionId.0681c844-1b8f-4840-bb1b-949f29bc07a8",
+    "sessionId": "SessionId.1e945785-af13-4661-88bf-c1aca289811e",
     "application": {
       "applicationId": "amzn1.echo-sdk-ams.app.db490dd5-2058-4edc-a8c4-5cc7398149a9"
     },
@@ -13,11 +13,16 @@
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "EdwRequestId.4dbd7682-fa91-4d33-b4fb-7a1daca7d3f9",
-    "timestamp": 1445791304533,
+    "requestId": "EdwRequestId.a8dd9d95-6a5c-4e2a-b52b-d8dce9517a14",
+    "timestamp": 1445806663788,
     "intent": {
-      "name": "reset",
-      "slots": {}
+      "name": "ArticleDetailNumberIntent",
+      "slots": {
+        "StoryNumber": {
+          "name": "StoryNumber",
+          "value": "6"
+        }
+      }
     },
     "reason": null
   }
