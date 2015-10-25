@@ -21,43 +21,6 @@
 
 
 
-var alexa = require('alexa-app')
-var Request = require('request')
-var app = new alexa.app()
-app.intent('getNews',
-  {
-    "slots":{},
-    "utterances": [],
-  },
-  function(request,response) {
-  	var url = "https://controller-noyda.c9.io/articlelistontopic/news"
-  	Request(url, function(error, resp, body) {
-        if (!error && resp.statusCode == 200) {
-            response.say(body)
-        }
-        else {
-            response.say('http request failed')
-        }
-    })
-  }
-)
-
-app.intent('reset',
-  {
-    "slots":{},
-    "utterances": [],
-  },
-  function(request,response) {
-  	var url = "https://controller-noyda.c9.io"
-  	Request(url, function(error, resp, body) {
-        if (!error && resp.statusCode == 200) {
-            response.say('done')
-        }
-        else {
-            response.say('http request failed')
-        }
-    })
-  }
-)
 // Connect to lambda
+var app = require('./news_app.js')
 exports.handler = app.lambda();
