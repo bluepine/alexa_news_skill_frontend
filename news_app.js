@@ -52,12 +52,12 @@ app.intent('ArticleListOnTopicIntent', {
     },
     function(request, response) {
         var topic = request.slot(TOPIC);
-        if(!topic){
+        if (!topic) {
             response.reprompt('Please ask for headlines on a specific topc')
             return true
         }
         topic = topic.trim()
-        var url = backend_base_url + 'articlelistontopic/'+topic
+        var url = backend_base_url + 'articlelistontopic/' + topic
         httpGet(url).then(function(body) {
             var headlines = _.reduce(body, function(ret, item) {
                 ret += item.body + ' '
@@ -67,8 +67,9 @@ app.intent('ArticleListOnTopicIntent', {
             headlines = headlines.trim()
             if (!headlines) {
                 response.say(JSON.stringify(headlines)).send()
-            }else{
-                response.say('sorry, we have no more articles on '+topic).send()
+            }
+            else {
+                response.say('sorry, we have no more articles on ' + topic).send()
             }
         }).catch(function(err) {
             response.say('sorry, something went wrong').send()
@@ -77,5 +78,19 @@ app.intent('ArticleListOnTopicIntent', {
     }
 )
 
+
+function add_debugging_card(request, response) {
+    var intent = request.data.request.intent.name
+    var slots = request.data.request.intent.slots
+    var card_response = ''
+    for (var key in slots) {
+        card_response = card_response  + key + " : " + request.slot(key) + '; '
+    }
+    response.card(intent, card_response)
+}
+
+app.pre = function(request,response,type) {
+    add_debugging_card(request, response)
+};
 
 module.exports = app
