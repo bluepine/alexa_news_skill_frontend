@@ -1,7 +1,6 @@
 // ArticleListOnTopicIntent top headlines on {politics|Topic}
 // ArticleDetailKeywordIntent tell me the {Clinton|Keyword} story
 // ArticleDetailNumberIntent tell me story {StoryNumber}
-// ArticleDetailOrderIntent tell me the {Order} story
 // NextArticleIntent play the next story
 // PreviousArticleIntent play the previous story
 // NextArticleListIntent more headlines
@@ -15,7 +14,7 @@
 // NoInterestForListIntent i don't like this list
 // NoInterestForArticleIntent i don't like this article
 // ArticleListOnDateIntent top headlines {Date}
-// ArticleListOnTopicOnDateIntent top headlines on {politics|Topic} {Date}
+// ArticleListOnTopicOnDateIntent top headlines on {politics|Topic} around {Date}
 // ReplayArticleIntent replay article
 // ReplayArticleListIntent replay headlines
 
@@ -40,6 +39,11 @@ var Q = require('q')
 var R = require('request')
 
 var httpGet = function(url) {
+    log(url.slice(-1))
+    if (url.slice(-1) == '/') {
+        url = _.trimRight(url, '/')
+    }
+    log(url)
     var deferred = Q.defer();
     R(url, function(error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -60,27 +64,27 @@ function list_response(list, response, topic) {
     list = JSON.parse(list)
     var card_response = ''
     var headlines = list.reduce(function(ret, item) {
-                // log('item:'+item.headline)
-                ret += item.headline + '. '
-                card_response += item.headline + '. From ' + item.url + '\n'
-                return ret
-            }, '')
-            headlines = headlines.trim()
-            if (headlines) {
-                var card_title = 'Headline List'
-                if(topic){
-                    card_title += ' on ' + topic
-                }
-                response.card(card_title, card_response)
-                response.say(headlines).send()
-            }
-            else {
-                var sorry = 'sorry, we have no more articles'
-                if(topic){
-                    sorry += ' on ' + topic
-                }
-                response.say(sorry).send()
-            }
+        // log('item:'+item.headline)
+        ret += item.headline + '. '
+        card_response += item.headline + '\n' //+ '. From ' + item.url + '\n'
+        return ret
+    }, '')
+    headlines = headlines.trim()
+    if (headlines) {
+        var card_title = 'Headline List'
+        if (topic) {
+            card_title += ' on ' + topic
+        }
+        response.card(card_title, card_response)
+        response.say(headlines).send()
+    }
+    else {
+        var sorry = 'sorry, we have no more articles'
+        if (topic) {
+            sorry += ' on ' + topic
+        }
+        response.say(sorry).send()
+    }
 }
 
 
@@ -117,7 +121,7 @@ function article_response(body, response) {
         response.say('sorry, something went wrong').send()
         return
     }
-    response.card(body.headline, body.body + '   From ' + body.url)
+    response.card(body.headline, body.body) // + '   From ' + body.url)
     response.say(body.headline + '. ' + body.body).send()
 }
 
@@ -174,6 +178,48 @@ app.intent('ArticleDetailKeywordIntent', {
             }
             if (body == NO_MATCH_RESPONSE) {
                 response.say('Please specify a key word in one of the headlines').send()
+                return
+            }
+            article_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+
+app.intent('PreviousArticleIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'previousarticle/'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, there is no previous article').send()
+                return
+            }
+            article_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+
+app.intent('PreviousListIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'previouslist/'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, there is no previous headline list').send()
                 return
             }
             article_response(body, response)
