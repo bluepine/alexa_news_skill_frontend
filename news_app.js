@@ -21,6 +21,13 @@
 
 var backend_base_url = 'https://nodejs-test-swei-turner.c9.io/'
 
+var NO_MATCH_RESPONSE = 'NOTMATCH'
+var EMPTY_RESULT_RESPONSE = ''
+var ERROR_RESULT_RESPONSE = 'ERROR'
+
+
+/////////////////////////////////////
+
 function log(text) {
     console.log(text)
 }
@@ -100,12 +107,22 @@ app.intent('ArticleDetailNumberIntent', {
         number = number.trim()
         var url = backend_base_url + 'articledetail/number/' + number
         httpGet(url).then(function(body) {
-            if (!body || !body.title || !body.body) {
+            log(body)
+            if (!body) {
                 response.say('Please ask for a list of headlines first').send()
                 return
             }
-            var detail = body.title + '.' + body.body
-            response.say(detail).send()
+            if(body == NO_MATCH_RESPONSE){
+                response.say('Please specify a value article number within current list').send()
+                return
+            }
+            body = JSON.parse(body)
+            if(!body.headline || !body.url || !body.body){
+                response.say('sorry, something went wrong').send()
+                return
+            }
+            response.card(body.headline, body.body + '   From '+body.url)
+            response.say(body.headline + '. ' + body.body).send()
         }).catch(function(err) {
             log(err)
             response.say('sorry, something went wrong').send()

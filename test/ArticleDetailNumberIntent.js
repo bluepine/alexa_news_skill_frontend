@@ -20,7 +20,7 @@ module.exports = {
       "slots": {
         "StoryNumber": {
           "name": "StoryNumber",
-          "value": "6"
+          "value": "5"
         }
       }
     },
