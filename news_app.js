@@ -53,6 +53,36 @@ var alexa = require('alexa-app')
 var app = new alexa.app()
 var TOPIC = 'Topic'
 var NUMBER = 'StoryNumber'
+
+
+function list_response(list, response, topic) {
+    // body...
+    var card_response = ''
+    var headlines = list.reduce(function(ret, item) {
+                // log('item:'+item.headline)
+                ret += item.headline + '. '
+                card_response += item.headline + '. From ' + item.url + '\n'
+                return ret
+            }, '')
+            headlines = headlines.trim()
+            if (headlines) {
+                var card_title = 'Headline List'
+                if(topic){
+                    card_title += ' on ' + topic
+                }
+                response.card(card_title, card_response)
+                response.say(headlines).send()
+            }
+            else {
+                var sorry = 'sorry, we have no more articles'
+                if(topic){
+                    sorry += ' on ' + topic
+                }
+                response.say(sorry).send()
+            }
+}
+
+
 app.intent('ArticleListOnTopicIntent', {
         "slots": {
             TOPIC: 'AMAZON.LITERAL'
@@ -68,29 +98,27 @@ app.intent('ArticleListOnTopicIntent', {
         topic = topic.trim()
         var url = backend_base_url + 'articlelist/topic/' + topic
         httpGet(url).then(function(body) {
-            if(!body){
+            if (!body) {
                 response.say('sorry, we have no more articles on ' + topic).send()
                 return
             }
             body = JSON.parse(body)
-            var headlines = body.reduce(function(ret, item) {
-                // log('item:'+item.headline)
-                ret += item.headline + '. '
-                return ret
-            }, '')
-            headlines = headlines.trim()
-            if (headlines) {
-                response.say(headlines).send()
-            }
-            else {
-                response.say('sorry, we have no more articles on ' + topic).send()
-            }
+            list_response(body, response, topic)
         }).catch(function(err) {
             response.say('sorry, something went wrong').send()
         });
         return false;
     }
 )
+
+function article_response(body, response) {
+    if (!body.headline || !body.url || !body.body) {
+        response.say('sorry, something went wrong').send()
+        return
+    }
+    response.card(body.headline, body.body + '   From ' + body.url)
+    response.say(body.headline + '. ' + body.body).send()
+}
 
 app.intent('ArticleDetailNumberIntent', {
         "slots": {
@@ -112,17 +140,12 @@ app.intent('ArticleDetailNumberIntent', {
                 response.say('Please ask for a list of headlines first').send()
                 return
             }
-            if(body == NO_MATCH_RESPONSE){
+            if (body == NO_MATCH_RESPONSE) {
                 response.say('Please specify a value article number within current list').send()
                 return
             }
             body = JSON.parse(body)
-            if(!body.headline || !body.url || !body.body){
-                response.say('sorry, something went wrong').send()
-                return
-            }
-            response.card(body.headline, body.body + '   From '+body.url)
-            response.say(body.headline + '. ' + body.body).send()
+            article_response(body, response)
         }).catch(function(err) {
             log(err)
             response.say('sorry, something went wrong').send()
