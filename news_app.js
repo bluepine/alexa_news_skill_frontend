@@ -120,10 +120,38 @@ app.intent('ArticleListOnTopicIntent', {
     }
 )
 
+app.intent('ArticleListOnTopicOnDateIntent', {
+        "slots": {
+            TOPIC: 'AMAZON.LITERAL',
+            DATE: 'AMAZON.DATE'
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var topic = request.slot(TOPIC);
+        if (!topic) {
+            response.reprompt('Please ask for headlines on a specific topc')
+            return true
+        }
+        topic = topic.trim()
+        var date = request.slot(DATE);
+        var url = backend_base_url + 'articlelist/topic/' + topic + '/' + date_q(date)
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, we have no more articles on ' + topic).send()
+                return
+            }
+            list_response(body, response, topic)
+        }).catch(function(err) {
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
 
 app.intent('ArticleListIntent', {
-        "slots": {
-        },
+        "slots": {},
         "utterances": [],
     },
     function(request, response) {
@@ -141,40 +169,43 @@ app.intent('ArticleListIntent', {
     }
 )
 
-function date_str(date){
+function date_str(date) {
     return dateFormat(date, "yyyy-mm-dd");
 }
 
-function date_q(date){
-        var oneDay = 24*60*60*1000;
-        var date = new Date(date)
-        var diffDays = Math.floor((new Date().getTime() - date.getTime())/(oneDay));
-        if(diffDays <= 0){
-            return ''
-        }else{
-            var preDate
-            if(diffDays < 7){
-                preDate = new Date(date.getTime() -  oneDay)
-            } else if (diffDays < 30){
-                preDate = new Date(date.getTime() - 7 * oneDay)
-            } else {
-                preDate = new Date(date.getTime() - 30 * oneDay)
-            }
-            log(preDate)
-            return date_str(preDate)+'~'+date_str(date)+'/'
-            // return 'firstPublishDate:'
+function date_q(date) {
+    var oneDay = 24 * 60 * 60 * 1000;
+    var date = new Date(date)
+    var diffDays = Math.floor((new Date().getTime() - date.getTime()) / (oneDay));
+    if (diffDays <= 0) {
+        return ''
+    }
+    else {
+        var preDate
+        if (diffDays < 7) {
+            preDate = new Date(date.getTime() - oneDay)
         }
+        else if (diffDays < 30) {
+            preDate = new Date(date.getTime() - 7 * oneDay)
+        }
+        else {
+            preDate = new Date(date.getTime() - 30 * oneDay)
+        }
+        log(preDate)
+        return 'firstPublishDate:'+date_str(preDate) + '~' + date_str(date) + '/'
+            // return 'firstPublishDate:'
+    }
 }
 
 app.intent('ArticleListOnDateIntent', {
         "slots": {
-            DATE : 'AMAZON.DATE'
+            DATE: 'AMAZON.DATE'
         },
         "utterances": [],
     },
     function(request, response) {
         var date = request.slot(DATE);
-        var url = backend_base_url + 'articlelist/'+date_q(date)
+        var url = backend_base_url + 'articlelist/' + date_q(date)
         httpGet(url).then(function(body) {
             if (!body) {
                 response.say('sorry, we have no more articles').send()
