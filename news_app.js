@@ -42,6 +42,8 @@ function log(text) {
 var Q = require('q')
 var R = require('request')
 var dateFormat = require('dateformat')
+var _ = require('lodash');
+var alexa = require('alexa-app')
 
 var httpGet = function(url) {
     log(url.slice(-1))
@@ -61,8 +63,6 @@ var httpGet = function(url) {
     return deferred.promise;
 }
 
-var _ = require('lodash');
-var alexa = require('alexa-app')
 var app = new alexa.app()
 
 function list_response(list, response, topic) {
