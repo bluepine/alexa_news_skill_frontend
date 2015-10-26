@@ -1,0 +1,89 @@
+{
+    "intents": [{
+        "intent": "ArticleListOnTopicIntent",
+        "slots": [{
+            "name": "Topic",
+            "type": "AMAZON.LITERAL"
+        }]
+    }, {
+        "intent": "ArticleDetailKeywordIntent",
+        "slots": [{
+            "name": "Keyword",
+            "type": "AMAZON.LITERAL"
+        }]
+    }, {
+        "intent": "ArticleDetailNumberIntent",
+        "slots": [{
+            "name": "StoryNumber",
+            "type": "AMAZON.NUMBER"
+        }]
+    }, {
+        "intent": "NextArticleIntent",
+        "slots": []
+    }, {
+        "intent": "PreviousArticleIntent",
+        "slots": []
+    }, {
+        "intent": "PreviousArticleListIntent",
+        "slots": []
+    }, {
+        "intent": "NextArticleListIntent",
+        "slots": []
+    }, {
+        "intent": "ReferenceArticleDetailKeywordIntent",
+        "slots": [{
+            "name": "Keyword",
+            "type": "AMAZON.LITERAL"
+        }]
+    }, {
+        "intent": "ArticleListIntent",
+        "slots": []
+    }, {
+        "intent": "OldArticleListIntent",
+        "slots": []
+    }, {
+        "intent": "OlderArticleListIntent",
+        "slots": []
+    }, {
+        "intent": "OldArticleListOnTopicIntent",
+        "slots": [{
+            "name": "Topic",
+            "type": "AMAZON.LITERAL"
+        }]
+    }, {
+        "intent": "OlderArticleListOnTopicIntent",
+        "slots": [{
+            "name": "Topic",
+            "type": "AMAZON.LITERAL"
+        }]
+    }, {
+        "intent": "NoInterestForListIntent",
+        "slots": []
+    }, {
+        "intent": "NoInterestForArticleIntent",
+        "slots": []
+    }, {
+        "intent": "ArticleListOnDateIntent",
+        "slots": [{
+            "name": "Date",
+            "type": "AMAZON.DATE"
+        }]
+    }, {
+        "intent": "ArticleListOnTopicOnDateIntent",
+        "slots": [{
+                "name": "Date",
+                "type": "AMAZON.DATE"
+            }, {
+                "name": "Topic",
+                "type": "AMAZON.LITERAL"
+            }
+
+        ]
+    }, {
+        "intent": "ReplayArticleIntent",
+        "slots": []
+    }, {
+        "intent": "ReplayArticleListIntent",
+        "slots": []
+    }]
+}
