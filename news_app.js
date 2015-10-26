@@ -7,16 +7,19 @@
 // PreviousArticleListIntent previous list of headlines
 // ReferenceArticleDetailKeywordIntent tell me more about {Clinton|Keyword}
 // ArticleListIntent top headlines
+// ArticleListOnDateIntent top headlines {Date}
+// ArticleListOnTopicOnDateIntent top headlines on {politics|Topic} around {Date}
+// ReplayArticleIntent replay article
+// ReplayArticleListIntent replay headlines
+
+
 // OldArticleListIntent what did i miss
 // OlderArticleListIntent more that i miss
 // OldArticleListOnTopicIntent what did i miss on {politics|Topic}
 // OlderArticleListOnTopicIntent more that i miss on {politics|Topic}
 // NoInterestForListIntent i don't like this list
 // NoInterestForArticleIntent i don't like this article
-// ArticleListOnDateIntent top headlines {Date}
-// ArticleListOnTopicOnDateIntent top headlines on {politics|Topic} around {Date}
-// ReplayArticleIntent replay article
-// ReplayArticleListIntent replay headlines
+
 
 var backend_base_url = 'https://nodejs-test-swei-turner.c9.io/'
 
