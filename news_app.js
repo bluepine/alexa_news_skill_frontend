@@ -19,7 +19,7 @@
 // ReplayArticleIntent replay article
 // ReplayArticleListIntent replay headlines
 
-var backend_base_url = 'https://controller-noyda.c9.io/'
+var backend_base_url = 'https://nodejs-test-swei-turner.c9.io/'
 
 function log(text) {
     console.log(text)
@@ -59,16 +59,21 @@ app.intent('ArticleListOnTopicIntent', {
             return true
         }
         topic = topic.trim()
-        var url = backend_base_url + 'articlelistontopic/' + topic
+        var url = backend_base_url + 'articlelist/topic/' + topic
         httpGet(url).then(function(body) {
-            var headlines = _.reduce(body, function(ret, item) {
-                ret += item.body + ' '
+            if(!body){
+                response.say('sorry, we have no more articles on ' + topic).send()
+                return
+            }
+            body = JSON.parse(body)
+            var headlines = body.reduce(function(ret, item) {
+                // log('item:'+item.headline)
+                ret += item.headline + '. '
                 return ret
             }, '')
-
             headlines = headlines.trim()
-            if (!headlines) {
-                response.say(JSON.stringify(headlines)).send()
+            if (headlines) {
+                response.say(headlines).send()
             }
             else {
                 response.say('sorry, we have no more articles on ' + topic).send()
