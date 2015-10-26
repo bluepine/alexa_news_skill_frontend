@@ -40,6 +40,7 @@ var httpGet = function(url) {
     })
     return deferred.promise;
 }
+
 var _ = require('lodash');
 var alexa = require('alexa-app')
 var app = new alexa.app()

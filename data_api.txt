@@ -2,4 +2,7 @@ articledetail/keyword/oklahoma #this API assumes the current list exists and is 
 articledetail/number/2 #this API assumes the current list exists and is stored in the backend. otherwise it returns empty result
 articlelistontopic/politics #we can use the same API articlelistontopic/politic to retrieve a new list every time.
 previouslist #if there is a previous list, the backend will remove the current list from list history and return the previous list. otherwise it returns empty and does nothing
-previousid #if there is a previous id, the backend will remove the current list from list history and return the previous id. otherwise it returns empty and does nothing.
+previousstory #if there is a previous id, the backend will remove the current list from list history and return the previous story. otherwise it returns empty and does nothing.
+currentlist # returns current list
+currentstory # returns current story
+reset # reset list and article history
