@@ -31,6 +31,7 @@ var ERROR_RESULT_RESPONSE = 'ERROR'
 var TOPIC = 'Topic'
 var NUMBER = 'StoryNumber'
 var KEYWORD = 'Keyword'
+var DATE = 'Date'
 
 /////////////////////////////////////
 
@@ -40,6 +41,7 @@ function log(text) {
 
 var Q = require('q')
 var R = require('request')
+var dateFormat = require('dateformat')
 
 var httpGet = function(url) {
     log(url.slice(-1))
@@ -126,6 +128,53 @@ app.intent('ArticleListIntent', {
     },
     function(request, response) {
         var url = backend_base_url + 'articlelist'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, we have no more articles').send()
+                return
+            }
+            list_response(body, response)
+        }).catch(function(err) {
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+function date_str(date){
+    return dateFormat(date, "yyyy-mm-dd");
+}
+
+function date_q(date){
+        var oneDay = 24*60*60*1000;
+        var date = new Date(date)
+        var diffDays = Math.floor((new Date().getTime() - date.getTime())/(oneDay));
+        if(diffDays <= 0){
+            return ''
+        }else{
+            var preDate
+            if(diffDays < 7){
+                preDate = new Date(date.getTime() -  oneDay)
+            } else if (diffDays < 30){
+                preDate = new Date(date.getTime() - 7 * oneDay)
+            } else {
+                preDate = new Date(date.getTime() - 30 * oneDay)
+            }
+            log(preDate)
+            return date_str(preDate)+'~'+date_str(date)+'/'
+            // return 'firstPublishDate:'
+        }
+}
+
+app.intent('ArticleListOnDateIntent', {
+        "slots": {
+            DATE : 'AMAZON.DATE'
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var date = request.slot(DATE);
+        var url = backend_base_url + 'articlelist/'+date_q(date)
         httpGet(url).then(function(body) {
             if (!body) {
                 response.say('sorry, we have no more articles').send()
