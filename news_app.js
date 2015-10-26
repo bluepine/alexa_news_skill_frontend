@@ -25,6 +25,10 @@ var NO_MATCH_RESPONSE = 'NOTMATCH'
 var EMPTY_RESULT_RESPONSE = ''
 var ERROR_RESULT_RESPONSE = 'ERROR'
 
+//slot names
+var TOPIC = 'Topic'
+var NUMBER = 'StoryNumber'
+var KEYWORD = 'Keyword'
 
 /////////////////////////////////////
 
@@ -51,12 +55,9 @@ var httpGet = function(url) {
 var _ = require('lodash');
 var alexa = require('alexa-app')
 var app = new alexa.app()
-var TOPIC = 'Topic'
-var NUMBER = 'StoryNumber'
-
 
 function list_response(list, response, topic) {
-    // body...
+    list = JSON.parse(list)
     var card_response = ''
     var headlines = list.reduce(function(ret, item) {
                 // log('item:'+item.headline)
@@ -102,7 +103,6 @@ app.intent('ArticleListOnTopicIntent', {
                 response.say('sorry, we have no more articles on ' + topic).send()
                 return
             }
-            body = JSON.parse(body)
             list_response(body, response, topic)
         }).catch(function(err) {
             response.say('sorry, something went wrong').send()
@@ -112,6 +112,7 @@ app.intent('ArticleListOnTopicIntent', {
 )
 
 function article_response(body, response) {
+    body = JSON.parse(body)
     if (!body.headline || !body.url || !body.body) {
         response.say('sorry, something went wrong').send()
         return
@@ -135,7 +136,6 @@ app.intent('ArticleDetailNumberIntent', {
         number = number.trim()
         var url = backend_base_url + 'articledetail/number/' + number
         httpGet(url).then(function(body) {
-            log(body)
             if (!body) {
                 response.say('Please ask for a list of headlines first').send()
                 return
@@ -144,7 +144,38 @@ app.intent('ArticleDetailNumberIntent', {
                 response.say('Please specify a value article number within current list').send()
                 return
             }
-            body = JSON.parse(body)
+            article_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+app.intent('ArticleDetailKeywordIntent', {
+        "slots": {
+            KEYWORD: 'AMAZON.LITERAL'
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var keyword = request.slot(KEYWORD);
+        if (!keyword) {
+            response.reprompt('Please let me know which headline do you want to hear more about')
+            return true
+        }
+        keyword = keyword.trim()
+        var url = backend_base_url + 'articledetail/keyword/' + keyword
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('Please ask for a list of headlines first').send()
+                return
+            }
+            if (body == NO_MATCH_RESPONSE) {
+                response.say('Please specify a key word in one of the headlines').send()
+                return
+            }
             article_response(body, response)
         }).catch(function(err) {
             log(err)
