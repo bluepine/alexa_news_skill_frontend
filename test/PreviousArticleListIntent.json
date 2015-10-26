@@ -1,0 +1,24 @@
+{
+  "session": {
+    "sessionId": "SessionId.3c928813-7650-4592-ac6d-621c786c204f",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.db490dd5-2058-4edc-a8c4-5cc7398149a9"
+    },
+    "attributes": null,
+    "user": {
+      "userId": "amzn1.account.AFKSFC7GBHXUD2WH72PGFPTGXLFA",
+      "accessToken": null
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.30d5b72f-6f3b-4452-ab51-e9fdc6a3d45d",
+    "timestamp": 1445875422051,
+    "intent": {
+      "name": "PreviousArticleListIntent",
+      "slots": {}
+    },
+    "reason": null
+  }
+}

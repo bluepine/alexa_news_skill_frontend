@@ -1,0 +1,33 @@
+{
+  "session": {
+    "sessionId": "SessionId.bf6baafe-2c94-44c6-8c01-4b0e39402e5c",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.db490dd5-2058-4edc-a8c4-5cc7398149a9"
+    },
+    "attributes": null,
+    "user": {
+      "userId": "amzn1.account.AFKSFC7GBHXUD2WH72PGFPTGXLFA",
+      "accessToken": null
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.f77fe2d5-9ecb-4c75-8132-a59e02cc91dd",
+    "timestamp": 1445874069458,
+    "intent": {
+      "name": "ArticleListOnTopicOnDateIntent",
+      "slots": {
+        "Topic": {
+          "name": "Topic",
+          "value": "politics"
+        },
+        "Date": {
+          "name": "Date",
+          "value": "2014"
+        }
+      }
+    },
+    "reason": null
+  }
+}

@@ -315,7 +315,28 @@ app.intent('PreviousArticleIntent', {
 )
 
 
-app.intent('PreviousListIntent', {
+app.intent('ReplayArticleIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'currentarticle/'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, no article has been selected').send()
+                return
+            }
+            article_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+
+app.intent('PreviousArticleListIntent', {
         "slots": {},
         "utterances": [],
     },
@@ -326,7 +347,27 @@ app.intent('PreviousListIntent', {
                 response.say('sorry, there is no previous headline list').send()
                 return
             }
-            article_response(body, response)
+            list_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+app.intent('ReplayArticleListIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'currentlist/'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, no headline list has been requested').send()
+                return
+            }
+            list_response(body, response)
         }).catch(function(err) {
             log(err)
             response.say('sorry, something went wrong').send()
