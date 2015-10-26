@@ -1,3 +1,4 @@
+//done:
 // ArticleListOnTopicIntent top headlines on {politics|Topic}
 // ArticleDetailKeywordIntent tell me the {Clinton|Keyword} story
 // ArticleDetailNumberIntent tell me story {StoryNumber}
@@ -5,14 +6,14 @@
 // PreviousArticleIntent play the previous story
 // NextArticleListIntent more headlines
 // PreviousArticleListIntent previous list of headlines
-// ReferenceArticleDetailKeywordIntent tell me more about {Clinton|Keyword}
 // ArticleListIntent top headlines
 // ArticleListOnDateIntent top headlines {Date}
 // ArticleListOnTopicOnDateIntent top headlines on {politics|Topic} around {Date}
 // ReplayArticleIntent replay article
 // ReplayArticleListIntent replay headlines
 
-
+//remaining:
+// ReferenceArticleDetailKeywordIntent tell me more about {Clinton|Keyword}
 // OldArticleListIntent what did i miss
 // OlderArticleListIntent more that i miss
 // OldArticleListOnTopicIntent what did i miss on {politics|Topic}
@@ -335,6 +336,26 @@ app.intent('ReplayArticleIntent', {
     }
 )
 
+app.intent('NextArticleIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'nextarticle/'
+        httpGet(url).then(function(body) {
+            if (!body || body == NO_MATCH_RESPONSE) {
+                response.say('sorry, headline list has been requested, or you played to the end of the played. Please request more headlines').send()
+                return
+            }
+            article_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
 
 app.intent('PreviousArticleListIntent', {
         "slots": {},
@@ -365,6 +386,26 @@ app.intent('ReplayArticleListIntent', {
         httpGet(url).then(function(body) {
             if (!body) {
                 response.say('sorry, no headline list has been requested').send()
+                return
+            }
+            list_response(body, response)
+        }).catch(function(err) {
+            log(err)
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
+app.intent('NextArticleListIntent', {
+        "slots": {},
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'newlist/'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, no more qualifying headlines').send()
                 return
             }
             list_response(body, response)
