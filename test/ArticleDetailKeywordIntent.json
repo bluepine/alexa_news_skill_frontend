@@ -1,0 +1,29 @@
+{
+  "session": {
+    "sessionId": "SessionId.d908d7fc-bec8-437a-93ce-df557cd6a6e9",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.db490dd5-2058-4edc-a8c4-5cc7398149a9"
+    },
+    "attributes": null,
+    "user": {
+      "userId": "amzn1.account.AFKSFC7GBHXUD2WH72PGFPTGXLFA",
+      "accessToken": null
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.5797ce8f-14b1-4c90-b56f-1c54b7889f54",
+    "timestamp": 1445858293425,
+    "intent": {
+      "name": "ArticleDetailKeywordIntent",
+      "slots": {
+        "Keyword": {
+          "name": "Keyword",
+          "value": "House"
+        }
+      }
+    },
+    "reason": null
+  }
+}

@@ -115,6 +115,27 @@ app.intent('ArticleListOnTopicIntent', {
     }
 )
 
+
+app.intent('ArticleListIntent', {
+        "slots": {
+        },
+        "utterances": [],
+    },
+    function(request, response) {
+        var url = backend_base_url + 'articlelist'
+        httpGet(url).then(function(body) {
+            if (!body) {
+                response.say('sorry, we have no more articles').send()
+                return
+            }
+            list_response(body, response)
+        }).catch(function(err) {
+            response.say('sorry, something went wrong').send()
+        });
+        return false;
+    }
+)
+
 function article_response(body, response) {
     body = JSON.parse(body)
     if (!body.headline || !body.url || !body.body) {
