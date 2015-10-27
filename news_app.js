@@ -27,6 +27,7 @@ var backend_base_url = 'https://nodejs-test-swei-turner.c9.io/'
 var NO_MATCH_RESPONSE = 'NOTMATCH'
 var EMPTY_RESULT_RESPONSE = ''
 var ERROR_RESULT_RESPONSE = 'ERROR'
+var SEND_CARD = false
 
 //slot names
 var TOPIC = 'Topic'
@@ -81,7 +82,9 @@ function list_response(list, response, topic) {
         if (topic) {
             card_title += ' on ' + topic
         }
-        response.card(card_title, card_response)
+        if (SEND_CARD) {
+            response.card(card_title, card_response)
+        }
         response.say(headlines).send()
     }
     else {
@@ -193,7 +196,7 @@ function date_q(date) {
             preDate = new Date(date.getTime() - 30 * oneDay)
         }
         log(preDate)
-        return 'firstPublishDate:'+date_str(preDate) + '~' + date_str(date) + '/'
+        return 'firstPublishDate:' + date_str(preDate) + '~' + date_str(date) + '/'
             // return 'firstPublishDate:'
     }
 }
@@ -226,7 +229,9 @@ function article_response(body, response) {
         response.say('sorry, something went wrong').send()
         return
     }
-    response.card(body.headline, body.body) // + '   From ' + body.url)
+    if (SEND_CARD) {
+        response.card(body.headline, body.body) // + '   From ' + body.url)
+    }
     response.say(body.headline + '. ' + body.body).send()
 }
 
@@ -428,8 +433,10 @@ function add_debugging_card(request, response) {
     response.card(intent, card_response)
 }
 
-app.pre = function(request, response, type) {
-    add_debugging_card(request, response)
-};
+if (!SEND_CARD) {
+    app.pre = function(request, response, type) {
+        add_debugging_card(request, response)
+    };
+}
 
 module.exports = app
