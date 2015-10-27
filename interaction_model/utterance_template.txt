@@ -1,19 +1,19 @@
-ArticleListOnTopicIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with} {politics|Topic}
-ArticleListOnTopicIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with} {virtual reality|Topic}
-ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me  {Clinton|Keyword} {story|article|piece|document|report|item}
-ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me  {virtual reality|Keyword} {story|article|piece|document|report|item}
-ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me  {story|article|piece|document|report|item} {about|regarding|on|concerning|referring to|containing|with} {Clinton|Keyword}
-ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me  {story|article|piece|document|report|item} {about|regarding|on|concerning|referring to|containing|with} {virtual reality|Keyword} 
-ArticleDetailNumberIntent {tell|play|get|read|show|give|grab|find|brief|report} me {story|article|piece|document|report|item} {\\r|StoryNumber}
+ArticleListOnTopicIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with|of} {politics|Topic}
+ArticleListOnTopicIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with|of} {virtual reality|Topic}
+ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report}  {Clinton|Keyword} {story|article|piece|document|report|item}
+ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report}  {virtual reality|Keyword} {story|article|piece|document|report|item}
+ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report}  {story|article|piece|document|report|item} {about|regarding|on|concerning|referring to|containing|with|of} {Clinton|Keyword}
+ArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report}  {story|article|piece|document|report|item} {about|regarding|on|concerning|referring to|containing|with|of} {virtual reality|Keyword} 
+ArticleDetailNumberIntent {tell|play|get|read|show|give|grab|find|brief|report}  {story|article|piece|document|report|item} {\\r|StoryNumber}
 NextArticleIntent {tell|play|get|read|show|give|grab|find|brief|report}  next {story|article|piece|document|report|item}
 PreviousArticleIntent {tell|play|get|read|show|give|grab|find|brief|report}  {previous|last} {story|article|piece|document|report|item}
-NextArticleListIntent {new|more} {summary|briefing|news|headlines|list}
+NextArticleListIntent {new|more|another|one more|next} {summary|briefing|news|headlines|list}
 PreviousArticleListIntent {previous|last} {summary|briefing|news|headlines|list}
-ReferenceArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me {more|} {about|regarding|on|concerning|referring to|containing|with} {Clinton|Keyword}
+ReferenceArticleDetailKeywordIntent {tell|play|get|read|show|give|grab|find|brief|report} me more {about|regarding|on|concerning|referring to|containing|with|of} {Clinton|Keyword}
 ArticleListIntent  {summary|briefing|news|headlines|list}
 ArticleListOnDateIntent  {summary|briefing|news|headlines|list} {around|at|about|in|roughly|approximately} {\\r|Date}
-ArticleListOnTopicOnDateIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with} {politics|Topic} {around|at|about|in|roughly|approximately} {\\r|Date}
-ReplayArticleIntent {tell|play|get|read|show|give|grab|find|brief|report|replay}  {current|this|that} {story|article|piece|document|report|item}
-ReplayArticleListIntent {tell|play|get|read|show|give|grab|find|brief|report|replay}  {current|this|that} {summary|briefing|news|headlines|list}
+ArticleListOnTopicOnDateIntent  {summary|briefing|news|headlines|list} {about|regarding|on|concerning|referring to|containing|with|of} {politics|Topic} {around|at|about|in|roughly|approximately} {\\r|Date}
+ReplayArticleIntent {tell|play|get|read|show|give|grab|find|brief|report|replay|repeat|remind me of}  {current|this|that|the} {story|article|piece|document|report|item}
+ReplayArticleListIntent {tell|play|get|read|show|give|grab|find|brief|report|replay|repeat|reiterate|remind me of}  {current|this|that|the} {summary|briefing|news|headlines|list}
 NoInterestForListIntent i don't like this {story|article|piece|document|report|item}
 NoInterestForArticleIntent i don't like this {story|article|piece|document|report|item}
