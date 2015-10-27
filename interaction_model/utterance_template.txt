@@ -1,6 +1,6 @@
 ArticleListOnTopicIntent  headlines of {politics|virtual reality|bill clinton|human tissue|china|Topic}
-ArticleDetailKeywordIntent play the {politics|virtual reality|bill clinton|human tissue|china|Keyword} {story|article|piece|document|report|item}
-ArticleDetailNumberIntent play {story|article} {number|} {\\r|StoryNumber}
+ArticleDetailKeywordIntent select the {politics|virtual reality|bill clinton|human tissue|china|Keyword} {story|article|piece|document|report|item}
+ArticleDetailNumberIntent select {story|article} {number|} {\\r|StoryNumber}
 NextArticleIntent go to the next {story|article}
 PreviousArticleIntent go back to the {previous|last} {story|article}
 NextArticleListIntent show me more headlines
