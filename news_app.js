@@ -75,6 +75,7 @@ function list_response(list, response, topic) {
     var headlines = list.reduce(function(ret, item) {
         // log('item:'+item.headline)
         ret += 'Story ' + number_map[i] + ': '+ item.headline + '. '
+        i += 1
         card_response += item.headline + '\n' //+ '. From ' + item.url + '\n'
         return ret
     }, '')
