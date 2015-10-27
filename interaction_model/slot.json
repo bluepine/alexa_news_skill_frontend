@@ -1,2 +1,6 @@
 {
+    "Topic": "AMAZON.LITERAL",
+    "Keyword": "AMAZON.LITERAL",
+    "StoryNumber" : "AMAZON.NUMBER",
+    "Date" : "AMAZON.DATE"
 }
