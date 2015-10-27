@@ -46,12 +46,11 @@ function main(u_file, s_file) {
         fs.readFile(u_file, 'utf8', function(err, data) {
             data = text_to_obj(data, slots)
             for (var intent in data) {
-                log(data[intent])
                 app.intent(intent, data[intent], dummy_function())
             }
             log(app.schema())
             log('/////////////////////////////////')
-            log(app.utterances())
+            log(app.utterances().replace(/\\\\r\|/g, ''))
         });
     })
 
