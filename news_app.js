@@ -70,9 +70,11 @@ var app = new alexa.app()
 function list_response(list, response, topic) {
     list = JSON.parse(list)
     var card_response = ''
+    var i = 1
+    var number_map = {1:'one', 2:'two', 3:'three', 4:'four', 5:'five'}
     var headlines = list.reduce(function(ret, item) {
         // log('item:'+item.headline)
-        ret += item.headline + '. '
+        ret += 'Story ' + number_map[i] + ': '+ item.headline + '. '
         card_response += item.headline + '\n' //+ '. From ' + item.url + '\n'
         return ret
     }, '')
@@ -85,7 +87,7 @@ function list_response(list, response, topic) {
         if (SEND_CARD) {
             response.card(card_title, card_response)
         }
-        response.say(headlines).send()
+        response.say(headlines + ' You can select a story for details.').send()
     }
     else {
         var sorry = 'sorry, we have no more articles'
