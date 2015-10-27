@@ -1,0 +1,30 @@
+{
+  "name": "alexa_news_skill_frontend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "alexa-app": "^2.1.5",
+    "dateformat": "^1.0.11",
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluepine/alexa_news_skill_frontend.git"
+  },
+  "author": "Song Wei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bluepine/alexa_news_skill_frontend/issues"
+  },
+  "homepage": "https://github.com/bluepine/alexa_news_skill_frontend#readme"
+}
