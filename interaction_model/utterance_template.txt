@@ -1,11 +1,10 @@
 ArticleListOnTopicIntent  headlines of {politics|virtual reality|bill clinton|human tissue|china|Topic}
-ArticleDetailKeywordIntent the {politics|virtual reality|bill clinton|human tissue|china|Keyword} {story|article|piece|document|report|item}
-ArticleDetailNumberIntent {story|article} {number|} {\\r|StoryNumber}
-NextArticleIntent next {story|article}
-PreviousArticleIntent {previous|last} {story|article}
-NextArticleListIntent more headlines
-PreviousArticleListIntent {previous|last} headlines
-ReferenceArticleDetailKeywordIntent about {politics|virtual reality|bill clinton|human tissue|china|Keyword}
+ArticleDetailKeywordIntent play the {politics|virtual reality|bill clinton|human tissue|china|Keyword} {story|article|piece|document|report|item}
+ArticleDetailNumberIntent play {story|article} {number|} {\\r|StoryNumber}
+NextArticleIntent go to the next {story|article}
+PreviousArticleIntent go back to the {previous|last} {story|article}
+NextArticleListIntent show me more headlines
+PreviousArticleListIntent go back to the {previous|last} headlines
 ArticleListIntent  {general|mixed|featured|top} headlines
 ArticleListOnDateIntent  headlines around {\\r|Date}
 ArticleListOnTopicOnDateIntent  headlines of {politics|virtual reality|bill clinton|human tissue|china|Topic} around {\\r|Date}
